@@ -1,0 +1,7 @@
+Cedula,Nombre,Fecha_Ingreso,Departamento,FechaInicial,FechaFinal,Cantidad
+------,------,-------------,------------,------------,----------,--------
+6789,Fernando Hernandez,2024-01-02,HR,2025-01-16,2025-01-31,3500000
+12345,Pedro Perez,2024-06-01,Ventas,2025-02-01,2025-02-15,2500000
+32194,Sandra Florez,2024-05-02,HR,2025-01-16,2025-01-31,4000000
+,,,,,,
+(3 rows affected),,,,,,

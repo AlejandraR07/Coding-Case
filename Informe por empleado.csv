@@ -1,0 +1,7 @@
+Id_Empleados,Cedula,Nombre,Descripcion_Rol,Direccion,Fecha_Ingreso,Cantidad,Fecha_Pago
+------------,------,------,---------------,---------,-------------,--------,----------
+1,12345,Pedro Perez,Supervisor,Calle 1 N 1- 1,2024-06-01,2500000,2025-02-15
+2,6789,Fernando Hernandez,Supervisor,Calle 2 N 2- 2,2024-01-02,3500000,2025-01-31
+3,32194,Sandra Florez,Supervisor,Calle 3 N 3 -3,2024-05-02,4000000,2025-01-31
+,,,,,,,
+(3 rows affected),,,,,,,
