@@ -30,15 +30,6 @@ IF OBJECT_ID('tempdb..#total') IS NOT NULL DROP TABLE #total;
 	FROM TbEmpleados AS A WITH (NOLOCK)
 	INNER JOIN TbPagos AS B WITH (NOLOCK)
 	ON A.Id_Empleados = B.Id_Empleados
-	
-
-	--IF DAY(GETDATE()) < 16
-
-	--	SELECT @FECHA_INICIO = DATEADD(MONTH, -1, DATEADD(day , 1 , EOMONTH(GETDATE()))) 
-
-	--ELSE
-	--	SELECT @FECHA_INICIO = DATEADD(MONTH, -1, DATEADD(day , 16 , EOMONTH(GETDATE()))) 	
-
 
 	SELECT A.Cedula, A.Nombre, A.Fecha_Ingreso, A.Departamento,
 	CASE WHEN DAY(Fecha_Pago) < 16 THEN DATEADD(MONTH, -1, DATEADD(day , 1 , EOMONTH(Fecha_Pago))) 
