@@ -16,7 +16,7 @@ GO
 CREATE PROCEDURE SpAlertInfo
 
 AS
-DECLARE @owner varchar(max) = 'Gineth.RicoSabogal@teleperformance.com'
+DECLARE @owner varchar(max) = 'email@gmail.com'
 DECLARE @client varchar(max)
 DECLARE @tableHTML nvarchar(max);
 
@@ -96,7 +96,7 @@ DECLARE checkclient SCROLL CURSOR FOR
 	  '</body>';
 
 
-		EXEC msdb.dbo.sp_send_dbmail @profile_name = 'MasterData',
+		EXEC msdb.dbo.sp_send_dbmail @profile_name = 'EquipoDatos',
 		@recipients = @owner,
 		@subject = 'Información Última Pago Empleados',
 		@body = @tableHTML,
