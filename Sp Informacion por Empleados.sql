@@ -11,19 +11,20 @@ GO
 CREATE PROCEDURE SpAlertInfo
 
 AS
-DECLARE @owner varchar(max) = 'email@gmail.com'
+-- Se declaran las variables a usar
+DECLARE @owner varchar(max) = 'correo@gmail.com' -- Lista de correos a los que lesllega la alerta
 DECLARE @client varchar(max)
 DECLARE @tableHTML nvarchar(max);
 
 
-
+-- Creación de temporales
 IF OBJECT_ID('tempdb..#total') IS NOT NULL DROP TABLE #total;
 
 	CREATE TABLE #total (
 		[Cantidad] VARCHAR(5)
 	)
 
-
+--LLENADO DE TEMPORALES
 	insert into #total
 	Select COUNT (A.Id_Empleados)
 	FROM TbEmpleados AS A WITH (NOLOCK)
@@ -40,7 +41,7 @@ IF OBJECT_ID('tempdb..#total') IS NOT NULL DROP TABLE #total;
 	GROUP BY  A.Id_Empleados,A.Cedula,A.Nombre,C.Descripcion_Rol,A.Direccion,A.Fecha_Ingreso,B.Cantidad
 
 	
-
+-- Inicia la lista para la creación del correo
 DECLARE checkclient SCROLL CURSOR FOR
                              
   select Cantidad from #total
@@ -52,7 +53,7 @@ DECLARE checkclient SCROLL CURSOR FOR
   WHILE @@FETCH_STATUS = 0  
   BEGIN
 
-
+-- Estructura y formatos que llevará el correo
 	  SET @tableHTML =
 	  '<head>
 				<meta charset="UTF-8">
@@ -90,7 +91,7 @@ DECLARE checkclient SCROLL CURSOR FOR
       N'<p>  Equipo Datos.</p>' +
 	  '</body>';
 
-
+	--Ejecución de la función enviar correo para tomar estructura y datos, agrega la información a un archivo excel
 		EXEC msdb.dbo.sp_send_dbmail @profile_name = 'EquipoDatos',
 		@recipients = @owner,
 		@subject = 'Información Última Pago Empleados',
@@ -111,6 +112,8 @@ FETCH NEXT FROM checkclient INTO @client
   END
   CLOSE checkclient
   DEALLOCATE checkclient
+
+  -- Cerramos el proceso de envío de correos y eliminamos temporales
 
   IF OBJECT_ID('tempdb..#total') IS NOT NULL DROP TABLE #total;
     IF OBJECT_ID('tempdb..##Datos') IS NOT NULL DROP TABLE ##Datos;
