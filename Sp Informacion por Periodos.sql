@@ -1,4 +1,4 @@
-USE [DataCalculate]
+USE [Data]
 GO
 
 /****** Object:  StoredProcedure [dbo].[spAlertEmail]    Script Date: 2025-02-15 08:46:35 ******/
@@ -89,10 +89,10 @@ DECLARE checkclient SCROLL CURSOR FOR
 			</head>' +
 			'<body>' +
       N'<H2>Alerta</H2>' +
-      N'<P>En el adjunto encontrarán la información por periodos para casa empleado' 
+      N'<P>En el adjunto encontrarÃ¡n la informaciÃ³n por periodos para casa empleado' 
 	 +
       --N'<table border="1">' +
-      --N'<tr><th>Información</th>'+ 
+      --N'<tr><th>InformaciÃ³n</th>'+ 
       --CAST((SELECT 
 	  --td = Cantidad,
 	  --'',
@@ -110,7 +110,7 @@ DECLARE checkclient SCROLL CURSOR FOR
 
 		EXEC msdb.dbo.sp_send_dbmail @profile_name = 'MasterData',
 		@recipients = @owner,
-		@subject = 'Información Total por Periodo',
+		@subject = 'InformaciÃ³n Total por Periodo',
 		@body = @tableHTML,
 		@query = 'SELECT * FROM ##Datos',
 		@attach_query_result_as_file = 1,
