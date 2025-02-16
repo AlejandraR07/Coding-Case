@@ -1,5 +1,4 @@
-USE [DataCalculate]
-GO
+USE [Data]
 
 /****** Object:  StoredProcedure [dbo].[spAlertEmail]    Script Date: 2025-02-15 08:46:35 ******/
 SET ANSI_NULLS ON
@@ -8,11 +7,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author: <>
--- Create date: <>
--- Description: <Envio de Correos>
--- =============================================
 
 CREATE PROCEDURE [dbo].[SpCheckReadPermission]  @Id_Roles INT, @table_name NVARCHAR(250)
 AS   
