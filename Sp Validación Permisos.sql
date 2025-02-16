@@ -67,3 +67,5 @@ BEGIN
 	SELECT * FROM TbPagos
 	End
 	ELSE Select 'Sin permisos para consultar esas tablas' as Mensaje
+	
+END;

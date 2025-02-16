@@ -1,22 +1,23 @@
-from django.db import connection
+from django.db import connection, DatabaseError
 from rest_framework.response import Response
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated  # <-- Agregado para permisos
-
+import logging
     
 class RegistrosAccesoView(APIView):
     permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden ver los registros
 
     def get(self, request):
         with connection.cursor() as cursor:
-            cursor.execute("SELECT Id_Registros, Id_Usuarios, Id_Roles, Fecha_Acceso, Tabla FROM TbRegistros")
+            cursor.execute("SELECT Id_Registros, Id_Usuarios, Id_Roles, Fecha_Acceso, Tabla, Tipo_Permiso FROM TbRegistros")
             rows = cursor.fetchall()
 
         registros = [{"id_registros": row[0], "id_usuarios": row[1], "id_roles": row[2], 
-                      "fecha_acceso": row[3], "tabla": row[4]} for row in rows]
+                      "fecha_acceso": row[3], "tabla": row[4], "Tipo_Permiso": row[5]} for row in rows]
         return Response(registros)
-
+    
 
 class EmpleadosView(APIView):
     permission_classes = [IsAuthenticated]
@@ -32,8 +33,11 @@ class EmpleadosView(APIView):
             cursor.execute("EXEC sp_ObtenerEmpleados @usuario_id=%s", [usuario_id])
             rows = cursor.fetchall()
 
-        empleados = [{"id_empleados": row[0], "nombre": row[1], "cedula": row[2], "direccion": row[3], "fecha_ingreso": row[4], "id_roles": row[5]} for row in rows]
+        empleados = [{"id_empleados": row[0], "nombre": row[1], "cedula": row[2], "direccion": row[3], "fecha_ingreso": row[4], 
+                      "id_roles": row[5]} for row in rows]
         return Response(empleados)
+
+logger = logging.getLogger(__name__)
 
 class PagosView(APIView):
     permission_classes = [IsAuthenticated]
@@ -46,12 +50,11 @@ class PagosView(APIView):
             cursor.execute("EXEC sp_RegistrarAcceso @usuario_id=%s, @tabla=%s", [usuario_id, 'vw_pagos'])
 
             # Obtener pagos con permisos
-            cursor.execute("EXEC sp_ObtenerPagos @usuario_id=%s", [usuario_id])
+          #  cursor.execute("EXEC sp_ObtenerPagos @usuario_id=%s", [usuario_id])
             rows = cursor.fetchall()
+            if not rows:
+                return Response({"message": "No se encontraron pagos para este usuario."}, status=204)
 
-        pagos = [{"id_pagos": row[0], "empleado_id": row[1], "cantidad": row[2], "fecha_pago": row[3]} for row in rows]
+        pagos = [{"id_pagos": row[0]} for row in rows]
         return Response(pagos)
 
-class ApiHomeView(APIView):
-    def get(self, request):
-        return JsonResponse({"message": "Bienvenido a la API de Permisos"}, status=200)

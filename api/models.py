@@ -7,6 +7,8 @@ class Empleado(models.Model):
     direccion = models.CharField(db_column='Direccion', max_length=150, null=True, blank=True)
     fecha_ingreso = models.DateField(db_column='Fecha_Ingreso', null=True, blank=True)
     id_roles = models.IntegerField(db_column='Id_Roles', null=True, blank=True)  # Clave foránea
+    Departamento = models.IntegerField(db_column='Departamento', null=True, blank=True) 
+    
 
     class Meta:
         managed = False  # Evita que Django intente modificar la tabla en SQL Server
