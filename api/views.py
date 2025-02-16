@@ -1,5 +1,6 @@
 from django.db import connection
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated  # <-- Agregado para permisos
 
@@ -50,3 +51,7 @@ class PagosView(APIView):
 
         pagos = [{"id_pagos": row[0], "empleado_id": row[1], "cantidad": row[2], "fecha_pago": row[3]} for row in rows]
         return Response(pagos)
+
+class ApiHomeView(APIView):
+    def get(self, request):
+        return JsonResponse({"message": "Bienvenido a la API de Permisos"}, status=200)
