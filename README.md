@@ -1,2 +1,1 @@
-# Coding-Case
-Coding Case: Sql Server
+# Coding-Case SQL Server
