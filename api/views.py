@@ -55,6 +55,6 @@ class PagosView(APIView):
             if not rows:
                 return Response({"message": "No se encontraron pagos para este usuario."}, status=204)
 
-        pagos = [{"id_pagos": row[0]} for row in rows]
+        pagos = [{"PERMISO": row[0]} for row in rows]
         return Response(pagos)
 
