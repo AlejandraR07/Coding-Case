@@ -50,7 +50,7 @@ class PagosView(APIView):
             cursor.execute("EXEC sp_RegistrarAcceso @usuario_id=%s, @tabla=%s", [usuario_id, 'vw_pagos'])
 
             # Obtener pagos con permisos
-          #  cursor.execute("EXEC sp_ObtenerPagos @usuario_id=%s", [usuario_id])
+            cursor.execute("EXEC sp_ObtenerPagos @usuario_id=%s", [usuario_id])
             rows = cursor.fetchall()
             if not rows:
                 return Response({"message": "No se encontraron pagos para este usuario."}, status=204)
