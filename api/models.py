@@ -7,7 +7,7 @@ class Empleado(models.Model):
     direccion = models.CharField(db_column='Direccion', max_length=150, null=True, blank=True)
     fecha_ingreso = models.DateField(db_column='Fecha_Ingreso', null=True, blank=True)
     id_roles = models.IntegerField(db_column='Id_Roles', null=True, blank=True)  # Clave foránea
-    Departamento = models.IntegerField(db_column='Departamento', null=True, blank=True) 
+    departamento = models.CharField(db_column='Departamento', max_length=50, null=True, blank=True) 
     
 
     class Meta:
@@ -37,10 +37,25 @@ class RegistroAcceso(models.Model):
     fecha_acceso = models.DateField(db_column='Fecha_Acceso', null=True, blank=True)
     id_usuarios = models.IntegerField(db_column='Id_Usuarios', null=True, blank=True)
     tabla = models.CharField(db_column='Tabla', max_length=200, null=True, blank=True)
-
+    tipo_permiso = models.CharField(db_column='Tipo_Permiso', max_length=200, null=True, blank=True)
+    
     class Meta:
         managed = False  # No modificar la tabla en SQL Server
         db_table = 'TbRegistros'
 
     def __str__(self):
-        return f"Acceso {self.id_registros} - Usuario {self.id_usuarios} - Tabla {self.tabla}"
+        return f"Acceso {self.id_registros} - Usuario {self.id_usuarios} - Tabla {self.tabla} - Permiso {self.tipo_permiso}"
+
+class Pagos(models.Model):
+    id_pagos = models.IntegerField(db_column='Id_Pagos', primary_key=True)
+    id_empleados = models.IntegerField(db_column='Id_Empleados', null=True, blank=True)
+    cantidad = models.IntegerField(db_column='Cantidad', null=True, blank=True)
+    fecha_pago = models.DateField(db_column='Fecha_Pago', null=True, blank=True)
+    
+
+    class Meta:
+        managed = False  # No modificar la tabla en SQL Server
+        db_table = 'TbPagos'
+
+    def __str__(self):
+        return f"Pago {self.id_pagos} - Empleado {self.id_empleados} - Cantidad {self.cantidad} - Fecha {self.fecha_pago}"

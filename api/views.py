@@ -33,8 +33,8 @@ class EmpleadosView(APIView):
             cursor.execute("EXEC sp_ObtenerEmpleados @usuario_id=%s", [usuario_id])
             rows = cursor.fetchall()
 
-        empleados = [{"id_empleados": row[0], "nombre": row[1], "cedula": row[2], "direccion": row[3], "fecha_ingreso": row[4], 
-                      "id_roles": row[5]} for row in rows]
+        empleados = [{"id_empleados": row[0], "cedula": row[1], "nombre": row[2], "direccion": row[3], "fecha_ingreso": row[4], 
+                      "id_roles": row[5], "departamento": row[6]} for row in rows]
         return Response(empleados)
 
 logger = logging.getLogger(__name__)
